@@ -17,23 +17,33 @@ class AuthRemoteRepo {
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({'name': name, 'email': email, 'password': password}),
       );
+      final resBody = jsonDecode(response.body) as Map<String, dynamic>;
       if (response.statusCode != 201) {
-        return left(AppFailure(response.body['error']));
+        return Left(AppFailure(resBody['detail']));
       }
-    } catch (e) {}
+      return Right(UserModel.fromMap(resBody));
+    } catch (e) {
+      return Left(AppFailure(e.toString()));
+    }
   }
 
-  Future<void> signIn({required String email, required String password}) async {
+  Future<Either<AppFailure, UserModel>> signIn({
+    required String email,
+    required String password,
+  }) async {
     try {
       final response = await http.post(
         Uri.parse('http://127.0.0.1:8000/auth/signin'),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({'email': email, 'password': password}),
       );
-      print(response.statusCode);
-      print(response.body);
+      final resBody = jsonDecode(response.body) as Map<String, dynamic>;
+      if (response.statusCode != 200) {
+        return Left(AppFailure(resBody['detail']));
+      }
+      return Right(UserModel.fromMap(resBody));
     } catch (e) {
-      print(e);
+      return Left(AppFailure(e.toString()));
     }
   }
 }

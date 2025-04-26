@@ -23,4 +23,7 @@ class UserModel {
       email: map['email'] ?? '',
     );
   }
+
+  @override
+  String toString() => 'UserModel(id: $id, name: $name, email: $email)';
 }

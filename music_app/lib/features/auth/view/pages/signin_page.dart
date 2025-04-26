@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:fpdart/fpdart.dart' as fpdart;
 import 'package:music_app/core/theme/app_pallet.dart';
+import 'package:music_app/features/auth/repositories/auth_remote_repo.dart';
 
 import '../widgets/auth_gradient_button.dart';
 import '../widgets/text_field.dart';
@@ -47,7 +49,22 @@ class _SigninPageState extends State<SigninPage> {
                 isObscureText: true,
               ),
               const SizedBox(height: 15),
-              AuthGradientButton(text: 'Sign In', onPressed: () {}),
+              AuthGradientButton(
+                text: 'Sign In',
+                onPressed: () async {
+                  if (formKey.currentState!.validate()) {
+                    final res = await AuthRemoteRepo().signIn(
+                      email: _emailController.text.trim(),
+                      password: _passwordController.text.trim(),
+                    );
+                    final val = switch (res) {
+                      fpdart.Left(value: final l) => l,
+                      fpdart.Right(value: final r) => r,
+                    };
+                    print(val);
+                  }
+                },
+              ),
               const SizedBox(height: 15),
               RichText(
                 text: TextSpan(

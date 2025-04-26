@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:fpdart/fpdart.dart' as fpdart;
 import 'package:music_app/core/theme/app_pallet.dart';
 import 'package:music_app/features/auth/repositories/auth_remote_repo.dart';
 import 'package:music_app/features/auth/view/pages/signin_page.dart';
@@ -23,7 +24,6 @@ class _SignUpPageState extends State<SignUpPage> {
 
   @override
   void initState() {
-    super.initState();
     _signInRecognizer =
         TapGestureRecognizer()
           ..onTap = () {
@@ -32,6 +32,7 @@ class _SignUpPageState extends State<SignUpPage> {
               MaterialPageRoute(builder: (_) => const SigninPage()),
             );
           };
+    super.initState();
   }
 
   @override
@@ -72,12 +73,19 @@ class _SignUpPageState extends State<SignUpPage> {
               AuthGradientButton(
                 text: 'Sign Up',
                 onPressed: () async {
-                  print("name controller:${_nameController.text.trim()}");
-                  await AuthRemoteRepo().signUp(
-                    name: _nameController.text.trim(),
-                    email: _emailController.text.trim(),
-                    password: _passwordController.text.trim(),
-                  );
+                  if (formKey.currentState!.validate()) {
+                    final res = await AuthRemoteRepo().signUp(
+                      name: _nameController.text.trim(),
+                      email: _emailController.text.trim(),
+                      password: _passwordController.text.trim(),
+                    );
+
+                    final val = switch (res) {
+                      fpdart.Left(value: final l) => l,
+                      fpdart.Right(value: final r) => r,
+                    };
+                    print(val);
+                  }
                 },
               ),
               const SizedBox(height: 15),
