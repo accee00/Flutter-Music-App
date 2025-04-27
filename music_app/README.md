@@ -1,5 +1,5 @@
 # music_app
-
+dart run build_runner watch -d
 A new Flutter project.
 
 ## Getting Started
