@@ -4,7 +4,7 @@ import 'package:music_app/core/theme/theme.dart';
 import 'package:music_app/features/auth/view/pages/signup_page.dart';
 
 void main() {
-  runApp(ProviderScope(child: const MyApp()));
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {

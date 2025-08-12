@@ -5,9 +5,10 @@ part 'auth_viewmodel.g.dart';
 
 @riverpod
 class AuthViewModel extends _$AuthViewModel {
-  final AuthRemoteRepo _authRemoteRepo = AuthRemoteRepo();
+  late AuthRemoteRepo _authRemoteRepo;
   @override
   AsyncValue<UserModel>? build() {
+    _authRemoteRepo = ref.watch(authRemoteRepoProvider);
     return null;
   }
 

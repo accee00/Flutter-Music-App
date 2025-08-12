@@ -1,10 +1,20 @@
 import 'dart:convert';
 
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:http/http.dart' as http;
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+
 import 'package:music_app/core/constant/server_constant.dart';
 import 'package:music_app/core/failure/failure.dart';
 import 'package:music_app/features/auth/model/user_model.dart';
+
+part 'auth_remote_repo.g.dart';
+
+@riverpod
+AuthRemoteRepo authRemoteRepo(Ref ref) {
+  return AuthRemoteRepo();
+}
 
 class AuthRemoteRepo {
   Future<Either<AppFailure, UserModel>> signUp({
