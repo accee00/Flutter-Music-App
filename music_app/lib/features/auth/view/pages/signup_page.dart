@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:music_app/core/theme/app_pallet.dart';
 import 'package:music_app/core/widgets/circular_indicator.dart';
-import 'package:music_app/core/widgets/custom_snackbar.dart';
+import 'package:music_app/core/utils/utils.dart';
 import 'package:music_app/features/auth/view/pages/signin_page.dart';
 import 'package:music_app/features/auth/viewmodel/auth_viewmodel.dart';
 
-import '../widgets/auth_gradient_button.dart';
-import '../widgets/text_field.dart';
+import '../../../../core/widgets/auth_gradient_button.dart';
+import '../../../../core/widgets/custom_text_field.dart';
 
 class SignUpPage extends ConsumerStatefulWidget {
   const SignUpPage({super.key});
