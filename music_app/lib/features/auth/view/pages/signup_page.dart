@@ -48,7 +48,9 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
 
   @override
   Widget build(BuildContext context) {
-    final isLoading = ref.watch(authViewModelProvider)?.isLoading == true;
+    final isLoading = ref.watch(
+      authViewModelProvider.select((val) => val?.isLoading == false),
+    );
 
     ref.listen(authViewModelProvider, (prev, next) {
       next?.when(
@@ -125,7 +127,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                           style: Theme.of(context).textTheme.titleMedium,
                           children: [
                             TextSpan(
-                              text: ' Sign In',
+                              text: 'Sign In',
                               style: const TextStyle(
                                 color: Pallete.gradient2,
                                 fontWeight: FontWeight.bold,

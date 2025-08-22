@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:music_app/features/auth/model/user_model.dart';
 import 'package:music_app/features/auth/repositories/auth_local_repo.dart';
 import 'package:music_app/features/auth/repositories/auth_remote_repo.dart';
@@ -53,5 +54,17 @@ class AuthViewModel extends _$AuthViewModel {
     );
   }
 
-  Future<UserModel?> getData() async {}
+  Future<UserModel?> getData() async {
+    state = const AsyncValue.loading();
+    final token = _authLocalRepo.getToken();
+    print(token);
+    if (token != null) {
+      final res = await _authRemoteRepo.getCurrentUserData(userToken: token);
+      res.match(
+        (failure) => AsyncValue.error(failure, StackTrace.current),
+        (user) => AsyncValue.data(user),
+      );
+    }
+    return null;
+  }
 }

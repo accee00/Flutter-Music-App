@@ -8,6 +8,9 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final container = ProviderContainer();
   await container.read(authViewModelProvider.notifier).initShared();
+  final userData =
+      await container.read(authViewModelProvider.notifier).getData();
+  print(userData);
   runApp(UncontrolledProviderScope(container: container, child: const MyApp()));
 }
 
